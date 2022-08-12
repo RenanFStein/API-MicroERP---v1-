@@ -163,6 +163,13 @@ class Vendas(models.Model):
     def __str__(self):
         dados = f'Venda nº{str(self.id)} para o Cliente {str(self.cliente.nome_cliente)}'
         return dados
+    
+    def nome_cliente(self):            
+        nome = Cliente.objects.values_list()
+        return nome[0][1]
+    def nome_produto(self):            
+        nome = Produto.objects.values_list()        
+        return nome[0][1]
 
     def produto(self):            
         estoq = Vendas.objects.filter(estoque=self.estoque).values_list()

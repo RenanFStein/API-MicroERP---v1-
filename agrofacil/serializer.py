@@ -70,7 +70,7 @@ class VendasSerializer(serializers.ModelSerializer):
     estoque = EstoquesSerializer()
     class Meta:
         model = Vendas
-        fields = ['cliente', 'estoque', ]
+        fields = ['cliente', 'estoque', 'nome_cliente','nome_produto']
 
     def create(self, validated_data):
 

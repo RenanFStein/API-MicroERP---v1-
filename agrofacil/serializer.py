@@ -93,7 +93,7 @@ class ComprasSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Compras
-        fields = ['fornecedor', 'estoque']
+        fields = ['fornecedor', 'estoque', 'nome_fornecedor','nome_produto']
 
     def create(self, validated_data):
         profile_data = validated_data.pop('estoque')

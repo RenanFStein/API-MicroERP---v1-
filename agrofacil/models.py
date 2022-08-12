@@ -62,7 +62,6 @@ class Cliente(models.Model):
         verbose_name = "Cadastro Cliente"
         verbose_name_plural = "Cadastro Cliente"
 
-
 class Produto(models.Model):
     nomeProduto = models.CharField(verbose_name="Nome do Produto", max_length=255, blank=False, null=False)
     descricao_produto = models.CharField(verbose_name="Descrição do Produto", max_length=255, blank=False, null=False)
@@ -122,6 +121,13 @@ class Compras(models.Model):
     def __str__(self):
         dados = f'Compra nº{str(self.id)} do fornecedor {str(self.fornecedor.nome_fornecedor)}'
         return dados
+
+    def nome_fornecedor(self):            
+        nome = Fornecedor.objects.values_list()
+        return nome[0][1]
+    def nome_produto(self):            
+        nome = Produto.objects.values_list()        
+        return nome[0][1]
 
     def produto(self):            
         estoq = Compras.objects.filter(estoque=self.estoque).values_list()

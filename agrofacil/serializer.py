@@ -19,6 +19,7 @@ class EmpresaSerializer(serializers.ModelSerializer):
                 'email_empresa',
                 'cidade_empresa',
                 'uf_empresa']
+        
 
 class ClientesSerializer(serializers.ModelSerializer):
     """ Serialização do model Clientes """
@@ -56,7 +57,7 @@ class ProdutosSerializer(serializers.ModelSerializer):
     """ Serialização do model Vendas """
     class Meta:
         model = Produto
-        fields = ['id','nomeProduto','descricao_produto']
+        fields = ['id','nomeProduto','descricao_produto', 'quantidade_estoque', 'custo_medio', 'valor_estoque']
 
 class EstoquesSerializer(serializers.ModelSerializer):
     """ Serialização do model Vendas """

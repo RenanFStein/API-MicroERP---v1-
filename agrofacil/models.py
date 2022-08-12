@@ -123,10 +123,7 @@ class Compras(models.Model):
         return dados
 
     def nome_fornecedor(self):            
-        nome = Fornecedor.objects.values_list()
-        return nome[0][1]
-    def nome_produto(self):            
-        nome = Produto.objects.values_list()        
+        nome = Fornecedor.objects.filter(id=self.fornecedor_id).values_list()
         return nome[0][1]
 
     def produto(self):            
@@ -165,12 +162,9 @@ class Vendas(models.Model):
         return dados
     
     def nome_cliente(self):            
-        nome = Cliente.objects.values_list()
+        nome = Cliente.objects.filter(id=self.cliente_id).values_list()
         return nome[0][1]
-    def nome_produto(self):            
-        nome = Produto.objects.values_list()        
-        return nome[0][1]
-
+        
     def produto(self):            
         estoq = Vendas.objects.filter(estoque=self.estoque).values_list()
         produto = Estoque.objects.filter(id=estoq[0][2]).values_list()

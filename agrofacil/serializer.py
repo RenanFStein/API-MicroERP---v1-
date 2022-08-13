@@ -72,17 +72,17 @@ class VendasSerializer(serializers.ModelSerializer):
         model = Vendas
         fields = ['id','cliente', 'estoque', 'nome_cliente','produto', 'quantidade','valor','total_venda']
 
-    def update_or_create(self, validated_data):
+    def create(self, validated_data):
 
         print(f'Retorno self: {validated_data.pop}')
 
         profile_data = validated_data.pop('estoque')
         print(profile_data)
-        produto=Estoque.objects.update_or_create(produto= profile_data['produto'], 
+        produto=Estoque.objects.create(produto= profile_data['produto'], 
                                     quantidade  = profile_data['quantidade'] * -1, 
                                     valor  = profile_data['valor'])
-        vendas = Vendas.objects.update_or_create(estoque=produto, **validated_data)
-        Caixa.objects.update_or_create(status= False, vendas = vendas)
+        vendas = Vendas.objects.create(estoque=produto, **validated_data)
+        Caixa.objects.create(status= False, vendas = vendas)
 
         return vendas
 
@@ -95,14 +95,14 @@ class ComprasSerializer(serializers.ModelSerializer):
         model = Compras
         fields = ['id','fornecedor', 'estoque', 'nome_fornecedor','produto', 'quantidade','valor','total_compra']
 
-    def update_or_create(self, validated_data):
+    def create(self, validated_data):
         profile_data = validated_data.pop('estoque')
 
-        produto=Estoque.objects.update_or_create(produto= profile_data['produto'], 
+        produto=Estoque.objects.create(produto= profile_data['produto'], 
                                     quantidade  = abs(profile_data['quantidade']), 
                                     valor  = profile_data['valor'])
-        compra=Compras.objects.update_or_create(estoque=produto, **validated_data)
-        Caixa.objects.update_or_create(status= False, compras = compra)
+        compra=Compras.objects.create(estoque=produto, **validated_data)
+        Caixa.objects.create(status= False, compras = compra)
         return compra
 
 

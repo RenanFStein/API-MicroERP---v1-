@@ -90,7 +90,7 @@ class ComprasSerializer(serializers.ModelSerializer):
     """ Serialização do model Compras """
     #
     estoque = EstoquesSerializer()
-   
+    
     class Meta:
         model = Compras
         fields = ['id','fornecedor', 'estoque', 'nome_fornecedor','produto', 'quantidade','valor','total_compra']

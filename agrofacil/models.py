@@ -122,27 +122,19 @@ class Compras(models.Model):
         dados = f'Compra nº{str(self.id)} do fornecedor {str(self.fornecedor.nome_fornecedor)}'
         return dados
 
-
-    def id_fornecedor(self):            
-        nome = Fornecedor.objects.filter(id=self.fornecedor_id).values_list()
         
-        return nome[0][0]
+     
     def nome_fornecedor(self):            
         nome = Fornecedor.objects.filter(id=self.fornecedor_id).values_list()
         
-        return nome[0][1]
+        return nome
 
-    def id_produto(self):            
-        estoq = Compras.objects.filter(estoque=self.estoque).values_list()
-        produto = Estoque.objects.filter(id=estoq[0][2]).values_list()
-        prod = Produto.objects.filter(id=produto[0][1]).values_list()
-        return prod[0][0]
 
     def produto(self):            
         estoq = Compras.objects.filter(estoque=self.estoque).values_list()
         produto = Estoque.objects.filter(id=estoq[0][2]).values_list()
         prod = Produto.objects.filter(id=produto[0][1]).values_list()
-        return prod[0][1]
+        return prod
 
     def quantidade(self):            
         estoq = Compras.objects.filter(estoque=self.estoque).values_list()
@@ -173,25 +165,15 @@ class Vendas(models.Model):
         dados = f'Venda nº{str(self.id)} para o Cliente {str(self.cliente.nome_cliente)}'
         return dados
     
-    def id_cliente(self):            
-        nome = Cliente.objects.filter(id=self.cliente_id).values_list()
-        return nome[0][0]
-
     def nome_cliente(self):            
         nome = Cliente.objects.filter(id=self.cliente_id).values_list()
-        return nome[0][1] 
-
-    def id_produto(self):            
-        estoq = Vendas.objects.filter(estoque=self.estoque).values_list()
-        produto = Estoque.objects.filter(id=estoq[0][2]).values_list()
-        prod = Produto.objects.filter(id=produto[0][1]).values_list()
-        return prod[0][0]
+        return nome
 
     def produto(self):            
         estoq = Vendas.objects.filter(estoque=self.estoque).values_list()
         produto = Estoque.objects.filter(id=estoq[0][2]).values_list()
         prod = Produto.objects.filter(id=produto[0][1]).values_list()
-        return prod[0][1]
+        return prod
 
     def quantidade(self):            
         estoq = Vendas.objects.filter(estoque=self.estoque).values_list()

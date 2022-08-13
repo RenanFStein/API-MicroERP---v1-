@@ -70,7 +70,7 @@ class VendasSerializer(serializers.ModelSerializer):
     estoque = EstoquesSerializer()
     class Meta:
         model = Vendas
-        fields = ['id','cliente', 'estoque', 'nome_cliente','produto', 'quantidade','valor','total_venda']
+        fields = ['id','cliente', 'estoque', 'id_cliente', 'nome_cliente','id_produto','produto', 'quantidade','valor','total_venda']
 
     def create(self, validated_data):
 
@@ -93,7 +93,7 @@ class ComprasSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Compras
-        fields = ['id','fornecedor', 'estoque', 'nome_fornecedor','produto', 'quantidade','valor','total_compra']
+        fields = ['id','fornecedor', 'estoque', 'id_fornecedor', 'nome_fornecedor','id_produto','produto', 'quantidade','valor','total_compra']
 
     def create(self, validated_data):
         profile_data = validated_data.pop('estoque')

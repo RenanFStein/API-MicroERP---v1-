@@ -105,7 +105,18 @@ class ComprasSerializer(serializers.ModelSerializer):
         Caixa.objects.create(status= False, compras = compra)
         return compra
 
+    def update(self, instance, validated_data):
+        estoque_data = validated_data.pop('estoque')
+        data = instance.estoque
 
+        
+        instance.fornecedor = validated_data.get(
+            'fornecedor', instance.fornecedor)
+        instance.estoque = validated_data.get(
+            'estoque', instance.estoque)
+        data = estoque_data.get(data)
+
+        return instance
         
 class CaixaSerializer(serializers.ModelSerializer):
     """ Serialização do model Caixa """

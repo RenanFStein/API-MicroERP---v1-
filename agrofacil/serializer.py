@@ -63,7 +63,7 @@ class EstoquesSerializer(serializers.ModelSerializer):
     """ Serialização do model Vendas """
     class Meta:
         model = Estoque
-        fields = ['produto','quantidade','valor']
+        fields = ['id', 'produto','quantidade','valor']
 
 class VendasSerializer(serializers.ModelSerializer):
     """ Serialização do model Vendas """
@@ -73,18 +73,27 @@ class VendasSerializer(serializers.ModelSerializer):
         fields = ['id','cliente', 'estoque', 'nome_cliente','produto', 'quantidade','valor','total_venda']
 
     def create(self, validated_data):
-
-        print(f'Retorno self: {validated_data.pop}')
-
         profile_data = validated_data.pop('estoque')
-        print(profile_data)
         produto=Estoque.objects.create(produto= profile_data['produto'], 
                                     quantidade  = profile_data['quantidade'] * -1, 
                                     valor  = profile_data['valor'])
         vendas = Vendas.objects.create(estoque=produto, **validated_data)
         Caixa.objects.create(status= False, vendas = vendas)
-
         return vendas
+
+    def update(self, instance, validated_data):
+        data = dict(self.data)
+        validated = dict((validated_data)) 
+        compra = Vendas.objects.get(id=data['id']) 
+        compra.fornecedor = validated['fornecedor']
+        compra.save()   
+        atualiza_estoque = Estoque.objects.get(id=data['produto']['estoque'][0][0])  
+        estq = dict(validated['estoque'])
+        atualiza_estoque.produto = estq['produto']
+        atualiza_estoque.quantidade = estq['quantidade']
+        atualiza_estoque.valor = estq['valor']
+        atualiza_estoque.save()               
+        return instance
 
 class ComprasSerializer(serializers.ModelSerializer):
     """ Serialização do model Compras """
@@ -105,18 +114,20 @@ class ComprasSerializer(serializers.ModelSerializer):
         Caixa.objects.create(status= False, compras = compra)
         return compra
 
+    
     def update(self, instance, validated_data):
-        estoque_data = validated_data.pop('estoque')
-        data = instance.estoque
-
-        
-        instance.fornecedor = validated_data.get(
-            'fornecedor', instance.fornecedor)
-        instance.estoque = validated_data.get(
-            'estoque', instance.estoque)
-        data = estoque_data.get(data)
-
-        return instance
+        data = dict(self.data)
+        validated = dict((validated_data)) 
+        compra = Compras.objects.get(id=data['id']) 
+        compra.fornecedor = validated['fornecedor']
+        compra.save()   
+        atualiza_estoque = Estoque.objects.get(id=data['produto']['estoque'][0][0])  
+        estq = dict(validated['estoque'])
+        atualiza_estoque.produto = estq['produto']
+        atualiza_estoque.quantidade = estq['quantidade']
+        atualiza_estoque.valor = estq['valor']
+        atualiza_estoque.save()               
+        return instance      
         
 class CaixaSerializer(serializers.ModelSerializer):
     """ Serialização do model Caixa """

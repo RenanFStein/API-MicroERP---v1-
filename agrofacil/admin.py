@@ -29,7 +29,7 @@ class VendasAdmin(admin.ModelAdmin):
 admin.site.register(Vendas, VendasAdmin)
 
 class ComprasAdmin(admin.ModelAdmin):
-    list_display= ('id','fornecedor', 'produto','quantidade','valor', 'total_compra')
+    list_display= ('id','fornecedor','estoque', 'quantidade','valor', 'total_compra')
     list_display_links= ('fornecedor',)
     list_filter = ('fornecedor',)     
 admin.site.register(Compras, ComprasAdmin) 
@@ -52,7 +52,7 @@ class ProdutoAdmin(admin.ModelAdmin):
         EstoqueInline,
         
     ]    
-    list_display= ('nomeProduto','descricao_produto','quantidade_estoque', 'custo_medio', 'valor_estoque')
+    list_display= ('id','nomeProduto','descricao_produto','quantidade_estoque', 'custo_medio', 'valor_estoque')
     list_filter = ('nomeProduto',)
     search_fields = ('nomeProduto',)    
 admin.site.register(Produto, ProdutoAdmin) 

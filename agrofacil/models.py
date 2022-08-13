@@ -106,7 +106,7 @@ class Estoque(models.Model):
 
 
     def __str__(self):
-        dados = f'Produto:'   
+        dados = f'Produto: {self.produto}'   
         return dados
     
     
@@ -118,9 +118,8 @@ class Compras(models.Model):
     fornecedor = models.ForeignKey(Fornecedor, verbose_name="Fornecedores", null=False, blank=False, on_delete=models.CASCADE)
     estoque = models.ForeignKey(Estoque, verbose_name="Estoque", null=False, blank=False, on_delete=models.CASCADE) 
 
-    def __str__(self):
-        dados = f'Compra nº{str(self.id)} do fornecedor {str(self.fornecedor.nome_fornecedor)}'
-        return dados
+    def __str__(self):        
+        return str(self.id)
 
         
      
@@ -134,7 +133,8 @@ class Compras(models.Model):
         estoq = Compras.objects.filter(estoque=self.estoque).values_list()
         produto = Estoque.objects.filter(id=estoq[0][2]).values_list()
         prod = Produto.objects.filter(id=produto[0][1]).values_list()
-        return {'id':prod[0][0], 'produto':prod[0][1]}
+        
+        return {'id':prod[0][0], 'produto':prod[0][1], 'estoque':produto}
 
     def quantidade(self):            
         estoq = Compras.objects.filter(estoque=self.estoque).values_list()

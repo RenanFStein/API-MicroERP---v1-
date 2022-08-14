@@ -120,21 +120,17 @@ class Compras(models.Model):
 
     def __str__(self):        
         return str(self.id)
-
-        
      
     def nome_fornecedor(self):            
-        nome = Fornecedor.objects.filter(id=self.fornecedor_id).values_list()
-    
+        nome = Fornecedor.objects.filter(id=self.fornecedor_id).values_list()    
         return {'id':nome[0][0], 'fornecedor':nome[0][1]} 
-
 
     def produto(self):            
         estoq = Compras.objects.filter(estoque=self.estoque).values_list()
         produto = Estoque.objects.filter(id=estoq[0][2]).values_list()
         prod = Produto.objects.filter(id=produto[0][1]).values_list()
-        
-        return {'id':prod[0][0], 'produto':prod[0][1], 'estoque':produto}
+        #return {'id':prod[0][0], 'produto':prod[0][1], 'estoque':produto}
+        return {'id':prod[0][0], 'produto':prod[0][1]}
 
     def quantidade(self):            
         estoq = Compras.objects.filter(estoque=self.estoque).values_list()
@@ -161,9 +157,8 @@ class Vendas(models.Model):
     cliente = models.ForeignKey(Cliente, verbose_name="Clientes", null=False, blank=False, on_delete=models.CASCADE)
     estoque = models.ForeignKey(Estoque, verbose_name="Estoque", null=False, blank=False, on_delete=models.CASCADE) 
 
-    def __str__(self):
-        dados = f'Venda nº{str(self.id)} para o Cliente {str(self.cliente.nome_cliente)}'
-        return dados[0][1]
+    def __str__(self):        
+        return str(self.id)
     
     def nome_cliente(self):            
         nome = Cliente.objects.filter(id=self.cliente_id).values_list()
@@ -204,7 +199,15 @@ class Caixa(models.Model):
     def __str__(self):
         dados = f'Caixa'
         return dados
-    
+        
+    def venda(self):            
+        status_venda = Vendas.objects.filter(id=self.vendas_id).values_list()
+        return status_venda
+
+    def compra(self):            
+        status_compra = Compras.objects.filter(id=self.compras_id).values_list()
+        return status_compra
+
     class Meta:
         verbose_name = "Caixa"
         verbose_name_plural = "Caixa"

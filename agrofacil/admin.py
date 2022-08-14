@@ -23,7 +23,7 @@ class ClienteAdmin(admin.ModelAdmin):
 admin.site.register(Cliente, ClienteAdmin)
 
 class VendasAdmin(admin.ModelAdmin):
-    list_display= ('id','cliente', 'produto','quantidade','valor', 'total_venda')
+    list_display= ('id','cliente', 'estoque','quantidade','valor', 'total_venda')
     list_display_links= ('cliente',)
     list_filter = ('cliente',) 
 admin.site.register(Vendas, VendasAdmin)
@@ -62,6 +62,7 @@ class CaixaAdmin(admin.ModelAdmin):
     list_display= ('id','vendas','compras','status', )
     list_display_links= ('vendas','compras', )
     list_filter = ('vendas','compras','status', )
-    search_fields = ('vendas','compras',)    
+    search_fields = ('vendas','compras',)
+        
 admin.site.register(Caixa, CaixaAdmin) 
 

@@ -133,7 +133,7 @@ class CaixaSerializer(serializers.ModelSerializer):
     """ Serialização do model Caixa """
     class Meta:
         model = Caixa
-        fields = ['id','vendas','compras','status']
+        fields = ['id','venda','compra','status']
 
 
           

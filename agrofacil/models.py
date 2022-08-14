@@ -129,8 +129,8 @@ class Compras(models.Model):
         estoq = Compras.objects.filter(estoque=self.estoque).values_list()
         produto = Estoque.objects.filter(id=estoq[0][2]).values_list()
         prod = Produto.objects.filter(id=produto[0][1]).values_list()
-        #return {'id':prod[0][0], 'produto':prod[0][1], 'estoque':produto}
-        return {'id':prod[0][0], 'produto':prod[0][1]}
+        return {'id':prod[0][0], 'produto':prod[0][1], 'estoque':produto}
+        
 
     def quantidade(self):            
         estoq = Compras.objects.filter(estoque=self.estoque).values_list()
@@ -162,13 +162,13 @@ class Vendas(models.Model):
     
     def nome_cliente(self):            
         nome = Cliente.objects.filter(id=self.cliente_id).values_list()
-        return {'id':nome[0][0], 'produto':nome[0][1]}
+        return {'id':nome[0][0], 'cliente':nome[0][1]}
 
     def produto(self):            
         estoq = Vendas.objects.filter(estoque=self.estoque).values_list()
         produto = Estoque.objects.filter(id=estoq[0][2]).values_list()
         prod = Produto.objects.filter(id=produto[0][1]).values_list()
-        return {'id':prod[0][0], 'produto':prod[0][1]}
+        return {'id':prod[0][0], 'produto':prod[0][1], 'estoque':produto}
 
     def quantidade(self):            
         estoq = Vendas.objects.filter(estoque=self.estoque).values_list()

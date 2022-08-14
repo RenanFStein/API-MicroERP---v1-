@@ -84,6 +84,7 @@ class VendasSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         data = dict(self.data)
         validated = dict((validated_data)) 
+        print(data['produto'])
         compra = Vendas.objects.get(id=data['id']) 
         compra.cliente = validated['cliente']
         compra.save()   
@@ -121,6 +122,7 @@ class ComprasSerializer(serializers.ModelSerializer):
         compra = Compras.objects.get(id=data['id']) 
         compra.fornecedor = validated['fornecedor']
         compra.save()   
+        data['produto']['estoque'][0][0]
         atualiza_estoque = Estoque.objects.get(id=data['produto']['estoque'][0][0])  
         estq = dict(validated['estoque'])
         atualiza_estoque.produto = estq['produto']

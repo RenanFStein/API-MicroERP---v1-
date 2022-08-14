@@ -1,3 +1,4 @@
+
 from re import T
 from tabnanny import verbose
 from django.db import models
@@ -200,13 +201,33 @@ class Caixa(models.Model):
         dados = f'Caixa'
         return dados
         
-    def venda(self):            
-        status_venda = Vendas.objects.filter(id=self.vendas_id).values_list()
-        return status_venda
+    def venda(self):
+        status_venda = []
+        cliente = []
+        venda = []
+        contas_cliente = []
+        if self.vendas:            
+            status_venda = Vendas.objects.all().filter(id=self.vendas_id).values()       
+            cliente = Cliente.objects.all().filter(id=status_venda[0]['cliente_id']).values('nome_cliente','cnpj_cliente')         
+            contas_cliente.append(cliente)
+            venda = Estoque.objects.all().filter(id=status_venda[0]['estoque_id']).values('quantidade','valor')           
+            contas_cliente.append(venda)
+            print(contas_cliente)
+        return contas_cliente
 
     def compra(self):            
-        status_compra = Compras.objects.filter(id=self.compras_id).values_list()
-        return status_compra
+        status_compra = []
+        fornecedor = []
+        compra = []
+        contas_fornecedor = []
+        if self.compras:            
+            status_compra = Compras.objects.all().filter(id=self.compras_id).values()
+            fornecedor = Fornecedor.objects.all().filter(id=status_compra[0]['fornecedor_id']).values('nome_fornecedor','cnpj_fornecedor')
+            contas_fornecedor.append(fornecedor)
+            compra = Estoque.objects.all().filter(id=status_compra[0]['estoque_id']).values('quantidade','valor')      
+            contas_fornecedor.append(compra)
+            print(contas_fornecedor)
+        return contas_fornecedor
 
     class Meta:
         verbose_name = "Caixa"

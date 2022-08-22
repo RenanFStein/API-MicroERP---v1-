@@ -33,7 +33,6 @@ class ComprasViewSet(viewsets.ModelViewSet):
     queryset = Compras.objects.all()
     serializer_class = ComprasSerializer      
      
-
 class ProdutosViewSet(viewsets.ModelViewSet):
     """ ViewSet Vendas """
     queryset = Produto.objects.all()
@@ -43,3 +42,4 @@ class EstoquesViewSet(viewsets.ModelViewSet):
     """ ViewSet Estoques """
     queryset = Estoque.objects.all()
     serializer_class = EstoquesSerializer  
+
